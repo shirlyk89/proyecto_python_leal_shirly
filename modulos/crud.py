@@ -166,12 +166,32 @@ def nota_prueba_ingreso():
         print(f"{resultado_final} Felicitaciones!! tu estado es ✅ {estado}")
     camper_encontrado['estado']=estado
 
+estados=[ "inscrito", "cursando", "graduado", "expulsado", "retirado"]
+
 def cambiar_estado():
     id_camper=input("Ingrese el id del camper: ").strip()
-    if id_camper in campers['estado']=="aprobado":
+    if id_camper not in campers:
+        print("❌ Camper no encontrado.")
+        return
+    if campers.get['estado'] != "aprobado":
+        print(f"El camper {id_camper} no aprobo la prueba de ingreso 😢")
+        return
+    opcion=input("Quiere cambiar el estado del camper (s-n): ").lower()
+    if opcion == "s".lower():
+        print("📓--​ Lista de estados: ")
+        for i, h in enumerate(estados, 1):
+            print(f"{i}.{h}")
+            try: 
+                opc_estado=int(input("Seleccione un estado ingresando un valor entre (1-5): "))
+                opc_estado=estados[opc_estado-1]
+            except (ValueError, IndexError):
+                print("⚠️​ Se esperaba un valor numerico entre: (1-4). Intentalo nuevamente")
+                return
+            nuevo_estado=opc_estado
+            print(f"El estado del camper {id_camper} cambio a {nuevo_estado}")
         
 
-    
+
 
 def asignar_ruta():
     ver_campers()
@@ -262,7 +282,7 @@ def crear_clase():
             "horario":[f"{dia} {hora}"],
             "trainer": trainer
         }
-        print(f"✅ Clase {codigo_clase} creada en la ruta {ruta}")
+        print(f"✅ Clase {codigo_clase} creada en la ruta {ruta} en el dia y la hora: {clase[codigo_clase]['horario']}")
 
 def ver_clase():
     codigo_clase=input("Ingrese el codigo de la clase: ")
@@ -272,7 +292,7 @@ def ver_clase():
     for codigo, contenido in clase.items():
         print("​📑​ Lista de clases añadidas:")
         print("--"*30)
-        print(f"{codigo}|{contenido['ruta']}|{contenido['horario']}|{contenido['trainer']}")
+        print(f"{codigo}| {contenido['ruta']}| {contenido['horario']}| {contenido['trainer']}").strip()
         
 def asignar_clase(): 
     codigo_clase=input("Codigo de la clase: ")
