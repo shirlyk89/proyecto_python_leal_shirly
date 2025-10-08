@@ -1,7 +1,7 @@
 from crud import (
-    crear_camper, ver_campers, crear_trainer, ver_trainers, crear_ruta,
+    crear_camper, ver_campers, crear_trainer, ver_trainers, nota_prueba_ingreso, crear_ruta,
     ver_rutas, asignar_ruta, asignar_programacion_formal,
-    crear_clase, asignar_clase, crear_nota_modulo,
+    crear_clase, ver_clase, asignar_clase, crear_nota_modulo,
     ver_campers_aprobados, reportar_inscritos,
     reportar_aprobados_inicial, reportar_trainers,
     reportar_bajo_rendimiento, reportar_asociados_ruta,
@@ -19,21 +19,23 @@ def menu_coordinador():
         print("2. Ver campers")
         print("3. Crear trainer")
         print("4. Ver trainers")
-        print("5. crear ruta")
-        print("6. ver rutas")
-        print("7. asignar ruta")
-        print("8. asignar programacion fromal")
-        print("9. crear clase")
-        print("10. asignar clase")
-        print("11. crear nota modulo")
-        print("12. ver campers aprobados")
-        print("13. reportar inscritos")
-        print("14. reportar aprobados inicial")
-        print("15. reportar trainers")
-        print("16. reportar bajo rendimiento")
-        print("17. reportar asociados a ruta")
-        print("18. reportar resultados modulo")
-        print("19. ver bases de datos")
+        print("5. Nota prueba de ingreso")
+        print("6. crear ruta")
+        print("7. ver rutas")
+        print("8. asignar ruta")
+        print("9. asignar programacion fromal")
+        print("10. crear clase")
+        print("11. ver clases")
+        print("12. asignar clase")
+        print("13. crear nota modulo")
+        print("14. ver campers aprobados")
+        print("15. reportar inscritos")
+        print("16. reportar aprobados inicial")
+        print("17. reportar trainers")
+        print("18. reportar bajo rendimiento")
+        print("19. reportar asociados a ruta")
+        print("20. reportar resultados modulo")
+        print("21. ver bases de datos")
         print("0. Cerrar sesión")
         opcion = input("Opción: ")
 
@@ -55,6 +57,10 @@ def menu_coordinador():
             u.pause()
         elif opcion == "5":
             u.clear_screen()
+            nota_prueba_ingreso()
+            u.pause()
+        elif opcion == "6":
+            u.clear_screen()
             ver_rutas()
             nombre = input("Ingrese el nombre de la ruta: ")
             modulos = { "fundamentos de programacion": [],
@@ -64,58 +70,62 @@ def menu_coordinador():
         "backend": [] }
             crear_ruta(nombre, modulos) 
             u.pause()
-        elif opcion == "6":
+        elif opcion == "7":
             u.clear_screen()
             ver_rutas()
             u.pause()
-        elif opcion == "7":
+        elif opcion == "8":
             u.clear_screen()
             asignar_ruta()
             u.pause()
-        elif opcion == "8":
+        elif opcion == "9":
             u.clear_screen()
             asignar_programacion_formal()
             u.pause()
-        elif opcion == "9":
+        elif opcion == "10":
             u.clear_screen()
             crear_clase()
             u.pause()
-        elif opcion == "10":
-            u.clear_screen()
-            asignar_clase()
-            u.pause()
         elif opcion == "11":
             u.clear_screen()
-            crear_nota_modulo()
+            ver_clase()
             u.pause()
         elif opcion == "12":
             u.clear_screen()
-            ver_campers_aprobados()
+            asignar_clase()
+            u.pause()
         elif opcion == "13":
             u.clear_screen()
-            reportar_inscritos()
+            crear_nota_modulo()
             u.pause()
         elif opcion == "14":
             u.clear_screen()
-            reportar_aprobados_inicial()
-            u.pause()
+            ver_campers_aprobados()
         elif opcion == "15":
             u.clear_screen()
-            reportar_trainers()
+            reportar_inscritos()
             u.pause()
         elif opcion == "16":
             u.clear_screen()
-            reportar_bajo_rendimiento()
+            reportar_aprobados_inicial()
             u.pause()
         elif opcion == "17":
             u.clear_screen()
-            reportar_asociados_ruta()
+            reportar_trainers()
             u.pause()
         elif opcion == "18":
             u.clear_screen()
-            reportar_resultados_modulos()
+            reportar_bajo_rendimiento()
             u.pause()
         elif opcion == "19":
+            u.clear_screen()
+            reportar_asociados_ruta()
+            u.pause()
+        elif opcion == "20":
+            u.clear_screen()
+            reportar_resultados_modulos()
+            u.pause()
+        elif opcion == "21":
             u.clear_screen()
             ver_bases_datos()
             u.pause()

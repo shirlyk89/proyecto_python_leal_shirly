@@ -3,7 +3,7 @@
 
 rutas={
     "notejs":{
-            "nombre": "ruta notejs",
+            "nombre": "ruta nodejs",
             "modulos":{
                 "fundamentos de progrmacion":["algoritmia", "pseint", "python"],
                 "progrmacion web":["HTML", "CSS", "Bootstrap"],
@@ -42,7 +42,7 @@ import os
 
 #codigo -> clave identificador del diccionario: "notejs", "java", "netcore"
 def crear_ruta( nombre, modulos):
-    codigo=input("Ingrese el codigo de la ruta (notejs-java-netcore): ")
+    codigo=input("Ingrese el codigo de la ruta (notejs-java-netcore): ")    
     
     try:  
         if codigo in rutas:
@@ -140,6 +140,39 @@ def ver_campers():
     for id_camper, datos in campers.items():
         print(f"   {id_camper} → {datos['nombre']} {datos['apellidos']}")
 
+def nota_prueba_ingreso():
+    num_id_camper=input("Ingrese el id del camper: ")
+    camper_encontrado=None
+    if num_id_camper not in campers:
+        print("❌​ No se encontro un camper con ese ID")
+        return
+    camper_encontrado=campers[num_id_camper]
+        
+    try:
+        nota_practica=int(input("Ingrese la nota del examen practico: "))
+        nota_teorica=int(input("Ingrese la nota del examen teorico: "))
+    except ValueError:
+        print("--"*30)
+        print("Se esperaba un valor numerico entre (0-100). Intentalo nuevamente")
+        return
+    resultado_final = (nota_practica + nota_teorica)/2 
+    estado = "Aprobado" if resultado_final >= 60 else "Reprobado"
+    if resultado_final < 60:
+        print(f"\n Camper {camper_encontrado['nombre']} Reprobaste la prueba de ingreso")
+        print(f"{resultado_final} 😢 tu estado es: {estado}")
+
+    else:
+        print(f"\n Camper {camper_encontrado['nombre']} Aprobaste exitosamente la prueba de ingreso")
+        print(f"{resultado_final} Felicitaciones!! tu estado es ✅ {estado}")
+    camper_encontrado['estado']=estado
+
+def cambiar_estado():
+    id_camper=input("Ingrese el id del camper: ").strip()
+    if id_camper in campers['estado']=="aprobado":
+        
+
+    
+
 def asignar_ruta():
     ver_campers()
     id_camper = input("\nIngrese ID del camper: ")
@@ -208,8 +241,17 @@ def crear_clase():
         if f"{dia} {hora}" in datos['horario']:
             print("Este bloque horario ya fue asignado")
             return
-
-    trainer=input("Ingrese el trainer: ")
+        
+    ver_trainers()
+    nom_trainer=input("Ingrese el trainer: ").strip().lower()
+    encontrado=False
+    for datos in trainer.values():
+        if datos['nombre'].lower() == nom_trainer:
+            encontrado=True
+            break
+    if not encontrado:
+        print("❌ No se encontro ningun trainer con ese nombre")
+        return
 
     if codigo_clase in clase:
         print("❌ Esa clase ya existe")
@@ -218,11 +260,20 @@ def crear_clase():
         clase[codigo_clase] = {
             "ruta": ruta,
             "horario":[f"{dia} {hora}"],
-            "trainer": trainer,
-            "campers": []
+            "trainer": trainer
         }
         print(f"✅ Clase {codigo_clase} creada en la ruta {ruta}")
 
+def ver_clase():
+    codigo_clase=input("Ingrese el codigo de la clase: ")
+    if not codigo_clase in clase:
+        print("❌​ No se encontro la clase con ese codigo")
+        return
+    for codigo, contenido in clase.items():
+        print("​📑​ Lista de clases añadidas:")
+        print("--"*30)
+        print(f"{codigo}|{contenido['ruta']}|{contenido['horario']}|{contenido['trainer']}")
+        
 def asignar_clase(): 
     codigo_clase=input("Codigo de la clase: ")
     ver_campers()

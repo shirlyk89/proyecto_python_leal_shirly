@@ -21,17 +21,19 @@ def main():
         opcion = input("Opción: ")
 
         if opcion == "1":
-            menu_coordinador()
+            id_coordinador=input("Ingrese su ID de coordinador: ")
+            if id_coordinador == "coordinador":
+                menu_coordinador()
         elif opcion == "2":
             id_trainer = input("Ingrese su ID de trainer: ")
-            if id_trainer in trainer:
+            if id_trainer == "trianer":
                 menu_trainer(id_trainer)
             else:
                 print("❌ Trainer no encontrado")
                 u.pause()
         elif opcion == "3":
             id_camper = input("Ingrese su ID de camper: ")
-            if id_camper in campers:
+            if id_camper == "camper":
                 menu_camper(id_camper)
             else:
                 print("❌ Camper no encontrado")
