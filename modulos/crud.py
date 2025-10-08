@@ -173,7 +173,7 @@ def cambiar_estado():
     if id_camper not in campers:
         print("❌ Camper no encontrado.")
         return
-    if campers.get['estado'] != "aprobado":
+    if campers.get(id_camper)['estado'] != "aprobado":
         print(f"El camper {id_camper} no aprobo la prueba de ingreso 😢")
         return
     opcion=input("Quiere cambiar el estado del camper (s-n): ").lower()
@@ -181,17 +181,15 @@ def cambiar_estado():
         print("📓--​ Lista de estados: ")
         for i, h in enumerate(estados, 1):
             print(f"{i}.{h}")
-            try: 
-                opc_estado=int(input("Seleccione un estado ingresando un valor entre (1-5): "))
-                opc_estado=estados[opc_estado-1]
-            except (ValueError, IndexError):
-                print("⚠️​ Se esperaba un valor numerico entre: (1-4). Intentalo nuevamente")
-                return
-            nuevo_estado=opc_estado
-            print(f"El estado del camper {id_camper} cambio a {nuevo_estado}")
-        
-
-
+        try: 
+            opc_estado=int(input("Seleccione un estado ingresando un valor entre (1-5): "))
+            opc_estado=estados[opc_estado-1]
+        except (ValueError, IndexError):
+            print("⚠️​ Se esperaba un valor numerico entre: (1-5). Intentalo nuevamente")
+            return
+        nuevo_estado=opc_estado
+        campers[id_camper]['estado']=nuevo_estado
+        print(f"El estado del camper {id_camper} cambio a {nuevo_estado}")
 
 def asignar_ruta():
     ver_campers()
@@ -298,6 +296,9 @@ def asignar_clase():
     codigo_clase=input("Codigo de la clase: ")
     ver_campers()
     id_camper=input("\nnumero de id camper: ")
+    if campers[id_camper]['estado'] != "aprobado": 
+        print("⚠️​ Este camper no fue aprobado. No se puede asignar a una clase")
+        return  
     if codigo_clase not in clase:
             print("❌ Esa clase no existe")
             return
