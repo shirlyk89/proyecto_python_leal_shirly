@@ -4,11 +4,13 @@ usuarios = {
     "trainer": "trainer"
 }
 
-from crud import cargar_todo, guardar_todo, campers, trainer
-from messages import menu_coordinador, menu_camper, menu_trainer
+from crud import guardar_campers, guardar_todo, exportar_trainer, cargar_datos
+from messages import menu_coordinador, menu_camper, menu_trainer, examen
 import utils as u 
 
-cargar_todo()
+guardar_campers()
+cargar_datos('nombre_archivo')
+exportar_trainer()
 
 def main():
     while True:
@@ -17,6 +19,7 @@ def main():
         print("1. Iniciar como Coordinador")
         print("2. Iniciar como Trainer")
         print("3. Iniciar como Camper")
+        print("4. EXAMEN")
         print("0. Salir")
         opcion = input("Opción: ")
 
@@ -38,6 +41,10 @@ def main():
             else:
                 print("❌ Camper no encontrado")
                 u.pause()
+        elif opcion == "4":
+            print("visualizacion rutas asignadas a trainer")
+            cargar_datos('nombre_archivo')
+            examen()
         elif opcion == "0":
             print("¡Hasta pronto!")
             guardar_todo()

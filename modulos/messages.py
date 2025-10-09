@@ -1,16 +1,18 @@
 from crud import (
     crear_camper, ver_campers, crear_trainer, ver_trainers, nota_prueba_ingreso, crear_ruta,
     ver_rutas, asignar_ruta, asignar_programacion_formal,
-    crear_clase, ver_clase, asignar_clase, crear_nota_modulo,
+    crear_salon, ver_salon, asignar_clase, crear_nota_modulo,
     ver_campers_aprobados, reportar_inscritos,
     reportar_aprobados_inicial, reportar_trainers,
     reportar_bajo_rendimiento, reportar_asociados_ruta,
-    reportar_resultados_modulos, ver_bases_datos
+    reportar_resultados_modulos, ver_bases_datos, exportar_trainers_rutas
 )
 
+from crud import guardar_campers, guardar_todo, exportar_trainers_rutas, exportar_trainer, cargar_datos
 from crud import campers, trainer, clase, rutas
 import utils as u
 
+cargar_datos('nombre_archivo')
 def menu_coordinador():
     while True:
         u.clear_screen()
@@ -24,8 +26,8 @@ def menu_coordinador():
         print("7. ver rutas")
         print("8. asignar ruta")
         print("9. asignar programacion fromal")
-        print("10. crear clase")
-        print("11. ver clases")
+        print("10. crear salon")
+        print("11. ver salon")
         print("12. asignar clase")
         print("13. crear nota modulo")
         print("14. ver campers aprobados")
@@ -62,6 +64,7 @@ def menu_coordinador():
         elif opcion == "6":
             u.clear_screen()
             ver_rutas()
+            from crud import guardar_campers, guardar_todo, exportar_trainers_rutas, exportar_trainer, cargar_datos
             nombre = input("Ingrese el nombre de la ruta: ")
             modulos = { "fundamentos de programacion": [],
         "programacion web": [],
@@ -84,11 +87,11 @@ def menu_coordinador():
             u.pause()
         elif opcion == "10":
             u.clear_screen()
-            crear_clase()
+            crear_salon()
             u.pause()
         elif opcion == "11":
             u.clear_screen()
-            ver_clase()
+            ver_salon()
             u.pause()
         elif opcion == "12":
             u.clear_screen()
@@ -130,6 +133,8 @@ def menu_coordinador():
             ver_bases_datos()
             u.pause()
         elif opcion == "0":
+            guardar_todo()
+            guardar_campers()
             break
         else:
             print("❌ Opción inválida")
@@ -155,6 +160,17 @@ def menu_camper(id_camper):
             print("❌ Opción inválida")
             u.pause()
 
+
+def examen():
+    while True:
+        print("1. Trainers y rutas asociadas")
+        opcion=input("Unica opcion (1): ")
+        if opcion == "1":
+            u.clear_screen()
+            cargar_datos('nombre_archivo')
+            exportar_trainers_rutas()
+            u.pause()
+        
 def menu_trainer(id_trainer):
     while True:
         u.clear_screen()
@@ -173,3 +189,4 @@ def menu_trainer(id_trainer):
         else:
             print("❌ Opción inválida")
             u.pause()
+

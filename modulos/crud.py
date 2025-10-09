@@ -63,8 +63,6 @@ def crear_ruta( nombre, modulos):
     except Exception as e:
         print(f"⚠️ Error al crear ruta: {e}")
 
-print("...")
-
 def ver_rutas():
     for codigo_ruta, datos_ruta in rutas.items():
         print("--"*35)
@@ -104,6 +102,18 @@ def ver_trainers():
     for id_trainer, datos in trainer.items():
         print(f"➡ ID: {id_trainer}")
         print(f"   Nombre: {datos['nombre']} {datos['apellidos']}")
+
+def exportar_trainers_rutas():
+    print("---Lista de trainers----")
+    for id, datos in trainer.items():
+        print(f" ID: {id}")
+        print(f"Nombre: {datos['nombre']} Apellidos: {datos['apellidos']}")
+    for cod_clase, datos in clase.items():
+        ruta = datos["ruta"]
+        trainer_id = datos["trainer"]
+        trainer_nombre = trainer[trainer_id]["nombre"] if trainer_id in trainer else "No asignado"
+        print("📓 Rutas asociadas: ")
+        print(f"\nClase: {cod_clase} | Ruta: {ruta} | Trainer: {trainer_nombre}")
 
 campers={}
 
@@ -198,12 +208,17 @@ def asignar_ruta():
     if id_camper not in campers:
         print("❌ Camper no encontrado.")
         return
-    
+    ver_trainers()
+    id_trainer=input("Ingrese el ID  del trainer: ")
+    if id_trainer not in trainer:
+        print("Este trainer no existe")
+        return
+        
     ver_rutas()
     codigo = input("Ingrese el código de la ruta a asignar: ")
     if codigo in rutas:
         campers[id_camper]["ruta"] = codigo
-        print(f"✅ Ruta {codigo} asignada a {campers[id_camper]['nombre']}")
+        print(f"✅ Ruta {codigo} asignada a {campers[id_camper]['nombre']} con el trainer {trainer[id_trainer['nombre']]}")
     else:
         print("❌ Código de ruta inválido.")
 
@@ -239,7 +254,7 @@ horas=[
 ]
 dia=["lunes", "martes", "miercoles", "jueves", "viernes"]
 
-def crear_clase():
+def crear_salon():
     codigo_clase=input("Cree un codigo para la clase: ")
     print("\n📚 Rutas disponibles: ")
     ver_rutas()
@@ -283,7 +298,7 @@ def crear_clase():
         }
         print(f"✅ Clase {codigo_clase} creada en la ruta {ruta} en el dia y la hora: {clase[codigo_clase]['horario']}")
 
-def ver_clase():
+def ver_salon():
     codigo_clase=input("Ingrese el codigo de la clase: ")
     if not codigo_clase in clase:
         print("❌​ No se encontro la clase con ese codigo")
@@ -297,7 +312,7 @@ def asignar_clase():
     codigo_clase=input("Codigo de la clase: ")
     ver_campers()
     id_camper=input("\nnumero de id camper: ")
-    if campers[id_camper]['estado'] != "aprobado": 
+    if campers[id_camper]["estado"] != "aprobado": 
         print("⚠️​ Este camper no fue aprobado. No se puede asignar a una clase")
         return  
     if codigo_clase not in clase:
@@ -315,7 +330,13 @@ def asignar_clase():
     aprobado = True  # asumimos que está aprobado
     for nota in campers[id_camper]["notas"].values():
         if nota["estado"] != "Aprobado":
-            aprobado = False
+            for cod_clase, datos in clase.items():
+                ruta = datos["ruta"]
+                trainer_id = datos["trainer"]
+                trainer_nombre = trainer[trainer_id]["nombre"] if trainer_id in trainer else "No asignado"
+
+        print(f"\nClase: {cod_clase} | Ruta: {ruta} | Trainer: {trainer_nombre}")
+        aprobado = False
         break 
     if not aprobado:
         print("❌ Ese camper no está aprobado, no puede asignarse a clases")
@@ -517,29 +538,31 @@ def cargar_datos(nombre_archivo):
     # Crear archivo si no existe
     if not os.path.exists(nombre_archivo):
         with open(nombre_archivo, "w", encoding="utf-8") as f:
-            json.dump({}, f)  # usar {} si necesitas diccionario
+            json.dump({}, f)  # usar {} si se necesita diccionario
 
     # Abrir y leer el archivo
     with open(nombre_archivo, "r", encoding="utf-8") as f:
         return json.load(f)
     
-def cargar_todo():
-    """Carga todos los archivos JSON del sistema."""
+def exportar_trainer():
     global rutas, campers, trainer, clase
-    
     rutas = cargar_datos("data/rutas.json")
-    campers = cargar_datos("data/campers.json")
     trainer = cargar_datos("data/trainer.json")
     clase = cargar_datos("data/clase.json")
     
     # Asegurar que sean diccionarios
     if not isinstance(rutas, dict):
         rutas = {}
-    if not isinstance(campers, dict):
-        campers = {}
     if not isinstance(trainer, dict):
         trainer = {}
     if not isinstance(clase, dict):
         clase = {}
     
     print(" Todos los datos han sido cargados correctamente.")
+
+def guardar_campers():
+    global campers
+    campers = cargar_datos("data/campers.json")
+    if not isinstance(campers, dict):
+        campers = {}
+    print(" Los datos de los campers han sido cargados correctamente.")
